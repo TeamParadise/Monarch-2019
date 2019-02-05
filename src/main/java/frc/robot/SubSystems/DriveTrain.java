@@ -4,7 +4,9 @@ import frc.robot.Robot;
 import frc.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -35,13 +37,13 @@ public class DriveTrain extends Subsystem
 	
 	private static final double maxOutput = 0.85;
 
-	public MecanumDrive robotDrive;
+	public RobotDrive robotDrive;
 	
 	private boolean isRunning = false;
 	
  	public DriveTrain()
 	{
-		robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+		robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 		
 		//Fix Output Not Enabled Error
 		robotDrive.setSafetyEnabled(false);
@@ -57,12 +59,9 @@ public class DriveTrain extends Subsystem
 		setDefaultCommand(new DriveWithJoystick());
 	}
 
-	public void driveCartesian(double x, double y, double twist, double gyroAngle)
+	public void arcadeDrive(Joystick stick, boolean squaredInputs)
 	{
-    isRunning = Math.abs(x) >= 0.2 || Math.abs(y) >= 0.2 || Math.abs(twist) >= 0.3 ? true : false;
-    
-		robotDrive.driveCartesian(x, y, twist, gyroAngle);
-		// SmartDashboard.putNumber("Heading", Robot.navXSource.getHeading());
+		robotDrive.arcadeDrive(stick,squaredInputs);
 	}
 	
 	public boolean isRunning()
