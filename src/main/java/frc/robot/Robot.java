@@ -21,7 +21,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.SubSystems.DriveTrain;
+import frc.robot.SubSystems.PistonTest;
 import frc.robot.SubSystems.Sonar;
+import frc.robot.commands.ExtendPiston;
+import frc.robot.commands.RetractPiston;
 
 /**
 * This is a demo program showing how to use Mecanum control with the RobotDrive
@@ -37,6 +40,8 @@ public class Robot extends TimedRobot {
 
  public static Sonar rightSonar = new Sonar(0,1);
  public static Sonar leftSonar = new Sonar(4,3);
+
+ public static PistonTest piston = new PistonTest();
  
  @Override
  public void robotInit() {
@@ -55,6 +60,10 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Left Sonar", (int)leftSonar.getInches());
     SmartDashboard.putNumber("Right Sonar", (int)rightSonar.getInches());
+
+    SmartDashboard.putData(new ExtendPiston());
+    SmartDashboard.putData(new RetractPiston());
+
     Scheduler.getInstance().run(); // Causes default commands to run
   }
 }
